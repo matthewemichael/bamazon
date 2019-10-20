@@ -20,7 +20,7 @@ In this activity, I created an Amazon-like storefront with the MySQL skills I le
 4) Confirms order & updates product inventory in database
 5) Asks customer if they would like to make another purchase
 ```
-![bamazon-demo](images/bamazonDemo.gif)
+![bamazon-demo](images/bamazonDemoLonger.gif)
 - - -
 
 ## Setup
