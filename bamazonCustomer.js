@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   // display inventory and prompt user to make a purchase
-  console.log("\nConnection Established\n");
+  // console.log("\nConnection Established\n");
   displayInventory();
 });
 
@@ -22,7 +22,7 @@ connection.connect(function(err) {
 function displayInventory() {
 	connection.query("SELECT * FROM products", function(err, res) {
 		if (err) throw err;
-		console.log("================================================== Bamazon Inventory ==================================================\n");
+		console.log("\n================================================== Bamazon Inventory ==================================================\n");
 		console.log("=======================================================================================================================\n");
 
 		var inventory = '';
@@ -45,11 +45,12 @@ function userPrompt() {
     {
 		name: "productID",
 		type: "input",
-		message: "Enter Item ID of product you would like to purchase.",
+		message: "Enter the Item ID of the product you would like to purchase.",
 		validate: function(value) {
-			if (isNaN(value) === false) {
+			if (isNaN(value) === false && value >= 1 && value <= 10) {
 				return true;
-			}
+            }
+            console.log(" \n\nEnter a valid ID Number.\n");
 			return false;
 		}
     }, 
@@ -58,10 +59,12 @@ function userPrompt() {
 		type: "input",
 		message: "How many units of this product would you like to purchase?",
 		validate: function(value) {
-			if (isNaN(value) === false) {
-				return true;
-			}
-			return false
+            if (isNaN(value) === false) {
+                return true;
+            } else {
+            console.log(" \n\nEnter a valid quantity.\n");
+            return false;
+            }
 		},
     },
     ])
@@ -77,10 +80,14 @@ function userPrompt() {
             // Varify item quantity desired is in inventory
             if (res[0].stock_quantity - quantity >= 0) {
 
-                console.log("Bamazon has sufficient inventory of " + res[0].product_name + " to fulfill your request.");
+                console.log("\n=======================================================================================================================\n",
+                            "\n Bamazon has sufficient inventory of " + res[0].product_name + " to fulfill your request.\n"
+                );
 
                 // Calculate total sale
-                console.log("Your order total will be $" + (quantity * res[0].price).toFixed(2),);
+                console.log(" Your order total will be $" + (quantity * res[0].price).toFixed(2) + "\n",
+                            "\n=======================================================================================================================\n"
+                );
                 
                 // Update inventory                       
                 connection.query('UPDATE products SET stock_quantity=? WHERE item_id=?', [res[0].stock_quantity - quantity, itemID],
@@ -88,16 +95,41 @@ function userPrompt() {
                 function (err, res) {
                     if (err) throw err;
 
-                    userPrompt();  // Runs the prompt again
+                    anotherPurchase();  // Asks user if they want to make another purchase
                 });  
 
             }
             // Out of stock
             else {
-                console.log("Insufficient Inventory To Fulfill Your Request");
+                console.log("\n=======================================================================================================================\n",
+                            "\n Insufficient Inventory To Fulfill Your Request\n",
+                            "\n There are currently " + res[0].stock_quantity + " units of " + res[0].product_name + " in stock.\n",
+                            "\n=======================================================================================================================\n"
+                );
 
-                userPrompt();  // Runs the prompt again
+                anotherPurchase();  // Asks user if they want to make another purchase
             }
         });
     })
 };
+
+function anotherPurchase () {
+    inquirer.prompt({
+        name: "confirmPurchase",
+        type: "confirm",
+        message: "Would you like to make another purchase?",
+        default: true
+    })
+
+    .then(function(confirmResponse) { 
+        if (confirmResponse.confirmPurchase === true) {
+            userPrompt();
+        } else {
+            console.log("\n=======================================================================================================================\n",
+                        "\n Thank you. Come again.\n",
+                        "\n=======================================================================================================================\n"
+            );
+            connection.end();
+        }
+    })
+}
