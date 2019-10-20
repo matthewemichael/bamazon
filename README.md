@@ -1,18 +1,17 @@
-## Bamazon 
-### An amazon-like storefront built with Node.js and MySQL
+# Bamazon 
+#### An amazon-like storefront built with Node.js and MySQL
 
 - - -
 
-### Overview
+## Overview
 
-In this activity, I be created an Amazon-like storefront with the MySQL skills I learned in this unit. The app will take in orders from customers and deplete stock from the store's inventory
+In this activity, I created an Amazon-like storefront with the MySQL skills I learned in this unit. The app will take in orders from customers and deplete stock from the store's inventory
 
 - - -
 
-### Function
+## Function
 
-#### Customer Demo <a id="customer-demo"></a>
-The customer interface:
+#### Customer Interface Demo
 
 ```
 1) Presents the customer with a list of all available products
@@ -23,7 +22,7 @@ The customer interface:
 ```
 - - -
 
-### Setup
+## Setup
 To run this application, you will need [MySQL](https://dev.mysql.com/doc/refman/8.0/en/installing.html) and [Node.js](https://nodejs.org/en/download/) installed on your computer.
 
 #### Install MySQL
@@ -41,7 +40,7 @@ node bamazonCustomer.js
 ```
 - - -
 
-### Technologies Used
+## Technologies Used
 
 * [JavaScript](https://www.javascript.com)
 * [Node.Js](https://nodejs.org/en/)
