@@ -43,6 +43,7 @@ node bamazonCustomer.js
 
 ## Technologies Used
 
+* [MySQL](https://www.mysql.com)
 * [JavaScript](https://www.javascript.com)
 * [Node.Js](https://nodejs.org/en/)
 * Node Packages
